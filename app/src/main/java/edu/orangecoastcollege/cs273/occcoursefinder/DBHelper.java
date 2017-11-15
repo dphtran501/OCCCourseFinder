@@ -55,15 +55,31 @@ class DBHelper extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase database)
     {
-        String createQuery = "CREATE TABLE " + COURSES_TABLE + "(" + COURSES_KEY_FIELD_ID + " INTEGER PRIMARY KEY, " + FIELD_ALPHA + " TEXT, " + FIELD_NUMBER + " TEXT, " + FIELD_TITLE + " TEXT" + ")";
+        String createQuery = "CREATE TABLE " + COURSES_TABLE + "("
+                + COURSES_KEY_FIELD_ID + " INTEGER PRIMARY KEY, "
+                + FIELD_ALPHA + " TEXT, "
+                + FIELD_NUMBER + " TEXT, "
+                + FIELD_TITLE + " TEXT"
+                + ")";
         database.execSQL(createQuery);
 
-        createQuery = "CREATE TABLE " + INSTRUCTORS_TABLE + "(" + INSTRUCTORS_KEY_FIELD_ID + " INTEGER PRIMARY KEY, " + FIELD_FIRST_NAME + " TEXT, " + FIELD_LAST_NAME + " TEXT, " + FIELD_EMAIL + " TEXT" + ")";
+        createQuery = "CREATE TABLE " + INSTRUCTORS_TABLE + "("
+                + INSTRUCTORS_KEY_FIELD_ID + " INTEGER PRIMARY KEY, "
+                + FIELD_FIRST_NAME + " TEXT, "
+                + FIELD_LAST_NAME + " TEXT, "
+                + FIELD_EMAIL + " TEXT" + ")";
         database.execSQL(createQuery);
 
         // Write the query to create the relationship table "Offerings"
         // Make sure to include foreign keys to the Courses and Instructors tables
-        createQuery = "CREATE TABLE " + OFFERINGS_TABLE + "(" + FIELD_CRN + " INTEGER" + FIELD_SEMESTER_CODE + " INTEGER" + FIELD_COURSE_ID + " INTEGER" + FIELD_INSTRUCTOR_ID + " INTEGER" + "FOREIGN KEY (" + FIELD_COURSE_ID + ") REFERENCES " + COURSES_TABLE + "(" + COURSES_KEY_FIELD_ID + ")," + "FOREIGN KEY (" + FIELD_INSTRUCTOR_ID + ") REFERENCES " + INSTRUCTORS_TABLE + "(" + INSTRUCTORS_KEY_FIELD_ID + ")" + ")";
+        createQuery = "CREATE TABLE " + OFFERINGS_TABLE + "("
+                + FIELD_CRN + " INTEGER,"
+                + FIELD_SEMESTER_CODE + " INTEGER,"
+                + FIELD_COURSE_ID + " INTEGER,"
+                + FIELD_INSTRUCTOR_ID + " INTEGER,"
+                + "FOREIGN KEY (" + FIELD_COURSE_ID + ") REFERENCES " + COURSES_TABLE + "(" + COURSES_KEY_FIELD_ID + "),"
+                + "FOREIGN KEY (" + FIELD_INSTRUCTOR_ID + ") REFERENCES " + INSTRUCTORS_TABLE + "(" + INSTRUCTORS_KEY_FIELD_ID + ")"
+                + ")";
         database.execSQL(createQuery);
 
     }
