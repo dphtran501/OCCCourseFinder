@@ -16,6 +16,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * A model class to manage the SQLite database used to store <code>Course</code> data,
+ * <code>Instructor</code> data, and <code>Offering</code> data.
+ *
+ * @author Derek Tran
+ * @version 1.0
+ * @since November 14, 2017
+ */
 class DBHelper extends SQLiteOpenHelper
 {
 
@@ -46,12 +54,22 @@ class DBHelper extends SQLiteOpenHelper
     private static final String FIELD_COURSE_ID = "course_id";
     private static final String FIELD_INSTRUCTOR_ID = "instructor_id";
 
+    /**
+     * Instantiates a new <code>DBHelper</code> object with the given context.
+     *
+     * @param context The activity used to open or create the database.
+     */
     public DBHelper(Context context)
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         mContext = context;
     }
 
+    /**
+     * Creates the database tables for the first time.
+     *
+     * @param database The database.
+     */
     @Override
     public void onCreate(SQLiteDatabase database)
     {
@@ -67,7 +85,8 @@ class DBHelper extends SQLiteOpenHelper
                 + INSTRUCTORS_KEY_FIELD_ID + " INTEGER PRIMARY KEY, "
                 + FIELD_FIRST_NAME + " TEXT, "
                 + FIELD_LAST_NAME + " TEXT, "
-                + FIELD_EMAIL + " TEXT" + ")";
+                + FIELD_EMAIL + " TEXT"
+                + ")";
         database.execSQL(createQuery);
 
         // Write the query to create the relationship table "Offerings"
@@ -84,6 +103,13 @@ class DBHelper extends SQLiteOpenHelper
 
     }
 
+    /**
+     * Drops the existing database tables and creates new ones when database is upgraded.
+     *
+     * @param database   The database.
+     * @param oldVersion The old database version.
+     * @param newVersion The new database version.
+     */
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion)
     {
@@ -96,6 +122,11 @@ class DBHelper extends SQLiteOpenHelper
 
     //********** COURSE TABLE OPERATIONS:  ADD, GETALL, EDIT, DELETE
 
+    /**
+     * Adds a <code>Course</code> to the database.
+     *
+     * @param course The <code>Course</code> to add to the database.
+     */
     public void addCourse(Course course)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -111,11 +142,18 @@ class DBHelper extends SQLiteOpenHelper
         db.close();
     }
 
+    /**
+     * Gets all the <code>Course</code>s in the database.
+     *
+     * @return A list of all <code>Course</code>s in the database.
+     */
     public List<Course> getAllCourses()
     {
         List<Course> coursesList = new ArrayList<>();
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.query(COURSES_TABLE, new String[]{COURSES_KEY_FIELD_ID, FIELD_ALPHA, FIELD_NUMBER, FIELD_TITLE}, null, null, null, null, null, null);
+        Cursor cursor = database.query(COURSES_TABLE,
+                new String[]{COURSES_KEY_FIELD_ID, FIELD_ALPHA, FIELD_NUMBER, FIELD_TITLE},
+                null, null, null, null, null, null);
 
         //COLLECT EACH ROW IN THE TABLE
         if (cursor.moveToFirst())
@@ -131,6 +169,11 @@ class DBHelper extends SQLiteOpenHelper
         return coursesList;
     }
 
+    /**
+     * Deletes a <code>Course</code> in the database.
+     *
+     * @param course The <code>Course</code> to delete in the database.
+     */
     public void deleteCourse(Course course)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -140,6 +183,9 @@ class DBHelper extends SQLiteOpenHelper
         db.close();
     }
 
+    /**
+     * Deletes all <code>Course</code>s in the database.
+     */
     public void deleteAllCourses()
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -147,6 +193,11 @@ class DBHelper extends SQLiteOpenHelper
         db.close();
     }
 
+    /**
+     * Updates a <code>Course</code> record in the database.
+     *
+     * @param course The <code>Course</code> to update in the database.
+     */
     public void updateCourse(Course course)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -160,6 +211,12 @@ class DBHelper extends SQLiteOpenHelper
         db.close();
     }
 
+    /**
+     * Gets a <code>Course</code> in the database.
+     *
+     * @param id The ID of the <code>Course</code> to get in the database.
+     * @return The <code>Course</code> to get in the database.
+     */
     public Course getCourse(long id)
     {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -176,6 +233,11 @@ class DBHelper extends SQLiteOpenHelper
 
     //********** INSTRUCTOR TABLE OPERATIONS:  ADD, GETALL, EDIT, DELETE
 
+    /**
+     * Adds an <code>Instructor</code> to the database.
+     *
+     * @param instructor The <code>Instructor</code> to add to the database.
+     */
     public void addInstructor(Instructor instructor)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -191,6 +253,11 @@ class DBHelper extends SQLiteOpenHelper
         db.close();
     }
 
+    /**
+     * Gets all <code>Instructor</code>s in the database.
+     *
+     * @return A list of all <code>Instructor</code>s in the database.
+     */
     public List<Instructor> getAllInstructors()
     {
         List<Instructor> instructorsList = new ArrayList<>();
@@ -211,6 +278,11 @@ class DBHelper extends SQLiteOpenHelper
         return instructorsList;
     }
 
+    /**
+     * Deletes an <code>Instructor</code> in the database.
+     *
+     * @param instructor The <code>Instructor</code> to delete in the database.
+     */
     public void deleteInstructor(Instructor instructor)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -220,6 +292,9 @@ class DBHelper extends SQLiteOpenHelper
         db.close();
     }
 
+    /**
+     * Deletes all <code>Instructor</code>s in the database.
+     */
     public void deleteAllInstructors()
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -227,6 +302,11 @@ class DBHelper extends SQLiteOpenHelper
         db.close();
     }
 
+    /**
+     * Updates an <code>Instructor</code> record in the database.
+     *
+     * @param instructor The <code>Instructor</code> to update in the database.
+     */
     public void updateInstructor(Instructor instructor)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -240,6 +320,12 @@ class DBHelper extends SQLiteOpenHelper
         db.close();
     }
 
+    /**
+     * Gets an <code>Instructor</code> in the database.
+     *
+     * @param id The ID of the <code>Instructor</code> to get in the database.
+     * @return The <code>Instructor</code> to get in the database.
+     */
     public Instructor getInstructor(long id)
     {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -258,6 +344,12 @@ class DBHelper extends SQLiteOpenHelper
     // Create the following methods: addOffering, getAllOfferings, deleteOffering
     // deleteAllOfferings, updateOffering, and getOffering
     // Use the Courses and Instructors methods above as a guide.
+
+    /**
+     * Adds an <code>Offering</code> to the database.
+     *
+     * @param offering The <code>Offering</code> to add to the database.
+     */
     public void addOffering(Offering offering)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -274,6 +366,11 @@ class DBHelper extends SQLiteOpenHelper
         db.close();
     }
 
+    /**
+     * Gets all <code>Offering</code>s in the database.
+     *
+     * @return
+     */
     public List<Offering> getAllOfferings()
     {
         List<Offering> offeringsList = new ArrayList<>();
@@ -294,6 +391,11 @@ class DBHelper extends SQLiteOpenHelper
         return offeringsList;
     }
 
+    /**
+     * Deletes an <code>Offering</code> in the database.
+     *
+     * @param offering The <code>Offering</code> to delete in the database.
+     */
     public void deleteOffering(Offering offering)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -303,6 +405,9 @@ class DBHelper extends SQLiteOpenHelper
         db.close();
     }
 
+    /**
+     * Deletes all <code>Offering</code>s in the database.
+     */
     public void deleteAllOfferings()
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -310,6 +415,11 @@ class DBHelper extends SQLiteOpenHelper
         db.close();
     }
 
+    /**
+     * Updates an <code>Offering</code> record in the database.
+     *
+     * @param offering The <code>Offering</code> to update in the database.
+     */
     public void updateOffering(Offering offering)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -323,6 +433,12 @@ class DBHelper extends SQLiteOpenHelper
         db.close();
     }
 
+    /**
+     * Gets an <code>Offering</code> in the database.
+     *
+     * @param crn The CRN of the <code>Offering</code> to get in the database.
+     * @return The <code>Offering</code> to get in the database.
+     */
     public Offering getOffering(int crn)
     {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -339,6 +455,12 @@ class DBHelper extends SQLiteOpenHelper
 
     //********** IMPORT FROM CSV OPERATIONS:  Courses, Instructors and Offerings
 
+    /**
+     * Imports <code>Course</code>s from a CSV.
+     *
+     * @param csvFileName The name of the CSV file to import from.
+     * @return True
+     */
     public boolean importCoursesFromCSV(String csvFileName)
     {
         AssetManager manager = mContext.getAssets();
@@ -378,6 +500,12 @@ class DBHelper extends SQLiteOpenHelper
         return true;
     }
 
+    /**
+     * Imports <code>Instructor</code>s from a CSV.
+     *
+     * @param csvFileName The name of the CSV file to import from.
+     * @return True
+     */
     public boolean importInstructorsFromCSV(String csvFileName)
     {
         AssetManager am = mContext.getAssets();
@@ -416,6 +544,12 @@ class DBHelper extends SQLiteOpenHelper
         return true;
     }
 
+    /**
+     * Imports <code>Offering</code>s from a CSV.
+     *
+     * @param csvFileName The name of the CSV file to import from.
+     * @return True
+     */
     public boolean importOfferingsFromCSV(String csvFileName)
     {
         AssetManager am = mContext.getAssets();

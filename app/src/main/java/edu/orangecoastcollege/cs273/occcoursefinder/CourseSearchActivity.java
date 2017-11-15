@@ -6,13 +6,15 @@ import android.util.Log;
 
 import java.util.List;
 
-public class CourseSearchActivity extends AppCompatActivity {
+public class CourseSearchActivity extends AppCompatActivity
+{
 
     private DBHelper db;
     private static final String TAG = "OCC Course Finder";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_search);
 
