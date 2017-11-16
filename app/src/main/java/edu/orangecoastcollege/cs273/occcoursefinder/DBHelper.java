@@ -160,7 +160,10 @@ class DBHelper extends SQLiteOpenHelper
         {
             do
             {
-                Course course = new Course(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+                Course course = new Course(cursor.getLong(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3));
                 coursesList.add(course);
             } while (cursor.moveToNext());
         }
@@ -179,7 +182,8 @@ class DBHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
 
         // DELETE THE TABLE ROW
-        db.delete(COURSES_TABLE, COURSES_KEY_FIELD_ID + " = ?", new String[]{String.valueOf(course.getId())});
+        db.delete(COURSES_TABLE, COURSES_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(course.getId())});
         db.close();
     }
 
@@ -207,7 +211,8 @@ class DBHelper extends SQLiteOpenHelper
         values.put(FIELD_NUMBER, course.getNumber());
         values.put(FIELD_TITLE, course.getTitle());
 
-        db.update(COURSES_TABLE, values, COURSES_KEY_FIELD_ID + " = ?", new String[]{String.valueOf(course.getId())});
+        db.update(COURSES_TABLE, values, COURSES_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(course.getId())});
         db.close();
     }
 
@@ -220,11 +225,17 @@ class DBHelper extends SQLiteOpenHelper
     public Course getCourse(long id)
     {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(COURSES_TABLE, new String[]{COURSES_KEY_FIELD_ID, FIELD_ALPHA, FIELD_NUMBER, FIELD_TITLE}, COURSES_KEY_FIELD_ID + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
+        Cursor cursor = db.query(COURSES_TABLE,
+                new String[]{COURSES_KEY_FIELD_ID, FIELD_ALPHA, FIELD_NUMBER, FIELD_TITLE},
+                COURSES_KEY_FIELD_ID + "=?", new String[]{String.valueOf(id)},
+                null, null, null, null);
 
         if (cursor != null) cursor.moveToFirst();
 
-        Course course = new Course(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+        Course course = new Course(cursor.getLong(0),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getString(3));
 
         cursor.close();
         db.close();
@@ -262,14 +273,19 @@ class DBHelper extends SQLiteOpenHelper
     {
         List<Instructor> instructorsList = new ArrayList<>();
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.query(INSTRUCTORS_TABLE, new String[]{INSTRUCTORS_KEY_FIELD_ID, FIELD_LAST_NAME, FIELD_FIRST_NAME, FIELD_EMAIL}, null, null, null, null, null, null);
+        Cursor cursor = database.query(INSTRUCTORS_TABLE,
+                new String[]{INSTRUCTORS_KEY_FIELD_ID, FIELD_LAST_NAME, FIELD_FIRST_NAME, FIELD_EMAIL},
+                null, null, null, null, null, null);
 
         //COLLECT EACH ROW IN THE TABLE
         if (cursor.moveToFirst())
         {
             do
             {
-                Instructor instructor = new Instructor(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+                Instructor instructor = new Instructor(cursor.getLong(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3));
                 instructorsList.add(instructor);
             } while (cursor.moveToNext());
         }
@@ -288,7 +304,8 @@ class DBHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
 
         // DELETE THE TABLE ROW
-        db.delete(INSTRUCTORS_TABLE, INSTRUCTORS_KEY_FIELD_ID + " = ?", new String[]{String.valueOf(instructor.getId())});
+        db.delete(INSTRUCTORS_TABLE, INSTRUCTORS_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(instructor.getId())});
         db.close();
     }
 
@@ -316,7 +333,8 @@ class DBHelper extends SQLiteOpenHelper
         values.put(FIELD_LAST_NAME, instructor.getLastName());
         values.put(FIELD_EMAIL, instructor.getEmail());
 
-        db.update(INSTRUCTORS_TABLE, values, INSTRUCTORS_KEY_FIELD_ID + " = ?", new String[]{String.valueOf(instructor.getId())});
+        db.update(INSTRUCTORS_TABLE, values, INSTRUCTORS_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(instructor.getId())});
         db.close();
     }
 
@@ -329,11 +347,17 @@ class DBHelper extends SQLiteOpenHelper
     public Instructor getInstructor(long id)
     {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(INSTRUCTORS_TABLE, new String[]{INSTRUCTORS_KEY_FIELD_ID, FIELD_LAST_NAME, FIELD_FIRST_NAME, FIELD_EMAIL}, INSTRUCTORS_KEY_FIELD_ID + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
+        Cursor cursor = db.query(INSTRUCTORS_TABLE,
+                new String[]{INSTRUCTORS_KEY_FIELD_ID, FIELD_LAST_NAME, FIELD_FIRST_NAME, FIELD_EMAIL},
+                INSTRUCTORS_KEY_FIELD_ID + "=?", new String[]{String.valueOf(id)},
+                null, null, null, null);
 
         if (cursor != null) cursor.moveToFirst();
 
-        Instructor instructor = new Instructor(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+        Instructor instructor = new Instructor(cursor.getLong(0),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getString(3));
 
         cursor.close();
         db.close();
@@ -375,14 +399,19 @@ class DBHelper extends SQLiteOpenHelper
     {
         List<Offering> offeringsList = new ArrayList<>();
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.query(OFFERINGS_TABLE, new String[]{FIELD_CRN, FIELD_SEMESTER_CODE, FIELD_COURSE_ID, FIELD_INSTRUCTOR_ID}, null, null, null, null, null, null);
+        Cursor cursor = database.query(OFFERINGS_TABLE,
+                new String[]{FIELD_CRN, FIELD_SEMESTER_CODE, FIELD_COURSE_ID, FIELD_INSTRUCTOR_ID},
+                null, null, null, null, null, null);
 
         //COLLECT EACH ROW IN THE TABLE
         if (cursor.moveToFirst())
         {
             do
             {
-                Offering offering = new Offering(cursor.getInt(0), cursor.getInt(1), getCourse(cursor.getInt(2)), getInstructor(cursor.getInt(3)));
+                Offering offering = new Offering(cursor.getInt(0),
+                        cursor.getInt(1),
+                        getCourse(cursor.getInt(2)),
+                        getInstructor(cursor.getInt(3)));
                 offeringsList.add(offering);
             } while (cursor.moveToNext());
         }
@@ -401,7 +430,8 @@ class DBHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
 
         // DELETE THE TABLE ROW
-        db.delete(OFFERINGS_TABLE, FIELD_CRN + " = ?", new String[]{String.valueOf(offering.getCRN())});
+        db.delete(OFFERINGS_TABLE, FIELD_CRN + " = ?",
+                new String[]{String.valueOf(offering.getCRN())});
         db.close();
     }
 
@@ -429,7 +459,8 @@ class DBHelper extends SQLiteOpenHelper
         values.put(FIELD_COURSE_ID, offering.getCourse().getId());
         values.put(FIELD_INSTRUCTOR_ID, offering.getInstructor().getId());
 
-        db.update(OFFERINGS_TABLE, values, FIELD_CRN + " = ?", new String[]{String.valueOf(offering.getCRN())});
+        db.update(OFFERINGS_TABLE, values, FIELD_CRN + " = ?",
+                new String[]{String.valueOf(offering.getCRN())});
         db.close();
     }
 
@@ -442,11 +473,17 @@ class DBHelper extends SQLiteOpenHelper
     public Offering getOffering(int crn)
     {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(OFFERINGS_TABLE, new String[]{FIELD_CRN, FIELD_SEMESTER_CODE, FIELD_COURSE_ID, FIELD_INSTRUCTOR_ID}, FIELD_CRN + "=?", new String[]{String.valueOf(crn)}, null, null, null, null);
+        Cursor cursor = db.query(OFFERINGS_TABLE,
+                new String[]{FIELD_CRN, FIELD_SEMESTER_CODE, FIELD_COURSE_ID, FIELD_INSTRUCTOR_ID},
+                FIELD_CRN + "=?", new String[]{String.valueOf(crn)},
+                null, null, null, null);
 
         if (cursor != null) cursor.moveToFirst();
 
-        Offering offering = new Offering(cursor.getInt(0), cursor.getInt(1), getCourse(cursor.getInt(2)), getInstructor(cursor.getInt(3)));
+        Offering offering = new Offering(cursor.getInt(0),
+                cursor.getInt(1),
+                getCourse(cursor.getInt(2)),
+                getInstructor(cursor.getInt(3)));
 
         cursor.close();
         db.close();
